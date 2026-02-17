@@ -2,8 +2,6 @@
 
 O **PowerBI Doc Generator** é uma ferramenta web poderosa e intuitiva projetada para automatizar a criação de documentação técnica de arquivos Power BI (.pbip). Ele extrai medidas DAX, tabelas e relacionamentos, gerando um PDF profissional com diagrama de ER integrado.
 
-![Preview do Projeto](https://raw.githubusercontent.com/LeonardoCGoulart/PowerBI---Doc-Generator/main/public/preview.png) *(Nota: Adicionar imagem real após o push)*
-
 ## ✨ Principais Funcionalidades
 
 - 📁 **Parsing de .pbip / .SemanticModel**: Suporte completo para a nova estrutura de arquivos do Power BI.
