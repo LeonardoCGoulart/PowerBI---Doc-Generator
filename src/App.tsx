@@ -5,7 +5,7 @@ import { DiagramViewer } from './components/DiagramViewer';
 import { PBIPParser } from './parsers/pbipParser';
 import { DiagramGenerator } from './generators/diagramGenerator';
 import { PDFGenerator } from './generators/pdfGenerator';
-import type { PBIPData } from './types/powerbi.types';
+import type { PBIPData, DashboardObjective, BusinessRule, PageExplanation } from './types/powerbi.types';
 import './App.css';
 
 type AppStep = 'upload' | 'preview' | 'diagram';
@@ -24,7 +24,26 @@ function App() {
     try {
       // Parser de arquivos .pbip
       const data = await PBIPParser.parse(files);
-      setPbipData(data);
+
+      // Initialize new fields
+      const initializedData: PBIPData = {
+        ...data,
+        metadata: {
+          ...data.metadata,
+          objective: {
+            description: '',
+            problemResolved: '',
+            decisionHelper: '',
+            targetAudience: '',
+            mainQuestion: ''
+          },
+          businessRules: [],
+          pageExplanations: [],
+          hasRLS: false
+        }
+      };
+
+      setPbipData(initializedData);
       setCurrentStep('preview');
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Erro ao processar arquivos');
@@ -41,6 +60,65 @@ function App() {
       metadata: {
         ...pbipData.metadata,
         [field]: value
+      }
+    });
+  };
+
+  // New Handlers
+  const handleUpdateGeneralInfo = (field: 'area' | 'updateFrequency', value: string) => {
+    if (!pbipData) return;
+    setPbipData({
+      ...pbipData,
+      metadata: {
+        ...pbipData.metadata,
+        [field]: value
+      }
+    });
+  };
+
+  const handleToggleRLS = (value: boolean) => {
+    if (!pbipData) return;
+    setPbipData({
+      ...pbipData,
+      metadata: {
+        ...pbipData.metadata,
+        hasRLS: value
+      }
+    });
+  };
+
+  const handleUpdateObjective = (field: keyof DashboardObjective, value: string) => {
+    if (!pbipData || !pbipData.metadata.objective) return;
+    setPbipData({
+      ...pbipData,
+      metadata: {
+        ...pbipData.metadata,
+        objective: {
+          ...pbipData.metadata.objective,
+          [field]: value
+        }
+      }
+    });
+  };
+
+  const handleUpdateBusinessRules = (rules: BusinessRule[]) => {
+    if (!pbipData) return;
+    setPbipData({
+      ...pbipData,
+      metadata: {
+        ...pbipData.metadata,
+        businessRules: rules
+      }
+    });
+  };
+
+  const handleUpdatePageExplanations = (pages: PageExplanation[]) => {
+    if (!pbipData) return;
+    setPbipData({
+      ...pbipData,
+      metadata: {
+        ...pbipData.metadata,
+        pageExplanations: pages
       }
     });
   };
@@ -191,6 +269,11 @@ function App() {
               <PreviewPanel
                 data={pbipData}
                 onEditMetadata={handleMetadataEdit}
+                onUpdateGeneralInfo={handleUpdateGeneralInfo}
+                onToggleRLS={handleToggleRLS}
+                onUpdateObjective={handleUpdateObjective}
+                onUpdateBusinessRules={handleUpdateBusinessRules}
+                onUpdatePageExplanations={handleUpdatePageExplanations}
                 onDeleteMeasure={handleDeleteMeasure}
                 onUpdateMeasureDescription={handleUpdateMeasureDescription}
                 onDeleteRelationship={handleDeleteRelationship}

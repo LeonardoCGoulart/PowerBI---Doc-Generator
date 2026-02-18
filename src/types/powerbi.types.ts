@@ -1,10 +1,41 @@
 // Types para estrutura de arquivos .pbip
+export interface BusinessRule {
+  id: string;
+  title: string;
+  description: string;
+}
+
+export interface PageExplanation {
+  id: string;
+  title: string;
+  objective: string;
+  kpis: string;
+  filters: string;
+  observations: string;
+}
+
+export interface DashboardObjective {
+  description: string;
+  problemResolved: string;
+  decisionHelper: string;
+  targetAudience: string;
+  mainQuestion: string;
+}
+
 export interface PBIPMetadata {
   title: string;
+  area?: string; // New: Area do dashboard
   author?: string;
   createdDate?: Date;
   lastModified?: Date;
   description?: string;
+
+  // New Professional Fields
+  objective?: DashboardObjective;
+  updateFrequency?: string;
+  businessRules?: BusinessRule[];
+  pageExplanations?: PageExplanation[];
+  hasRLS?: boolean;
 }
 
 export interface DaxMeasure {

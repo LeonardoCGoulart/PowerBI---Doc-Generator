@@ -63,7 +63,7 @@ export class PBIPParser {
     private static async extractMetadata(metadataFile: File | undefined, allFiles: File[]): Promise<PBIPMetadata> {
         const metadata: PBIPMetadata = {
             title: 'Relatório Power BI',
-            description: 'Documentação gerada automaticamente'
+            description: ''
         };
 
         if (metadataFile) {

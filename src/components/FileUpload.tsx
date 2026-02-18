@@ -33,7 +33,7 @@ export function FileUpload({ onFilesSelected, isProcessing }: FileUploadProps) {
                 input.type = 'file';
                 // @ts-ignore
                 input.webkitdirectory = true;
-                input.onchange = handleFileSelection;
+                input.onchange = (e) => handleFileSelection(e as unknown as React.ChangeEvent<HTMLInputElement>);
                 // Não é possível setar files programaticamente por segurança
                 alert('Por favor, use o botão "Selecionar Pasta" para fazer upload da pasta .pbip');
             }

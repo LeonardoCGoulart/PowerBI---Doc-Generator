@@ -386,3 +386,31 @@
         align-items: flex-start;
     }
 }
+
+.input-hints {
+    margin-top: var(--space-sm);
+    padding: var(--space-sm);
+    background-color: var(--color-bg);
+    border: 1px dashed var(--color-border);
+    border-radius: var(--radius-sm);
+}
+
+.input-hints strong {
+    display: block;
+    font-size: 0.85rem;
+    color: var(--color-text-secondary);
+    margin-bottom: var(--space-xs);
+}
+
+.input-hints ul {
+    margin: 0;
+    padding-left: 1.25rem;
+    list-style-type: disc;
+}
+
+.input-hints li {
+    font-size: 0.8rem;
+    color: var(--color-text-muted);
+    line-height: 1.4;
+    margin-bottom: 2px;
+}
